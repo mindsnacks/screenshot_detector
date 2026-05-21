@@ -119,6 +119,12 @@ class FlutterScreenshotDetectPlugin: FlutterPlugin, EventChannel.StreamHandler, 
     }
 
     private fun isScreenshotPath(path: String?): Boolean {
-        return path.toString().contains(MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString())
+        // The URI delivered to ContentObserver.onChange has a path like
+        // "/external/images/media/12345" (no scheme/authority), so comparing
+        // against EXTERNAL_CONTENT_URI.toString() ("content://media/external/images/media")
+        // always returned false. Instead, fire whenever the change occurs on an
+        // external images MediaStore row — that captures screenshots reliably
+        // and avoids needing READ_MEDIA_IMAGES to query row data on Android 13+.
+        return path?.contains("/external/images/media") == true
     }
 }
