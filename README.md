@@ -1,5 +1,10 @@
-
 # Flutter Screenshot Detector Plugin
+
+## Archived
+
+We forked this to fix a bug that broke screenshot detection on Android versions before 14 ([ed84c92](https://github.com/mindsnacks/screenshot_detector/commit/ed84c92ee184b1e74d6687a675ff76e9cc8fb26b)). Even after the fix, that code path fires for every new image (not just screenshots), and filtering it properly would require asking the user for photo library access. We decided it wasn't worth it and now handle Android 14+ screenshots directly in our app instead.
+
+---
 
 A Flutter plugin to detect when screenshots are taken on Android devices and iOS Devices. This plugin provides a real-time event-based system that works for Android versions below and above 14 (`Android UPSIDE_DOWN_CAKE`). It monitors screenshots using content observers for older Android versions and a dedicated screen capture callback for Android 14+.
 
